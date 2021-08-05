@@ -31,6 +31,7 @@ int main(int ac, char **av)
     for (int i = 0; i < 10; i++)
     {
         if (pthread_join(th[i], NULL) != 0) //wait for thread
+        //The pthread_join() function for threads is the equivalent of wait() for processes.
             perror("Fail to join thread");
     }
 }
