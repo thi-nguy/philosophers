@@ -6,7 +6,7 @@ RM = rm -f
 
 NAME = philo
 
-SRC = 	main.c\
+SRC = 	main.c utils.c\
 
 OBJ = $(SRC:.c=.o)
 
