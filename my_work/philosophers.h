@@ -13,9 +13,10 @@ enum {
 	SLEEP = 2,
 	THINK = 3,
 	TAKE_A_FORK = 4,
-	DEATH = 5,
-	RIGHT = 6,
-	LEFT = 7,
+    PUT_DOWN_A_FORK = 5,
+	DEAD = 6,
+	RIGHT = 7,
+	LEFT = 8
 };
 
 
@@ -39,12 +40,12 @@ typedef struct			s_philo {
 }   t_philo;
 
 argument_t      g_info;
-t_philo			*g_philo;
-pthread_mutex_t	*g_fork;
+t_philo			g_philo[200];
+pthread_mutex_t	g_fork[200];
 pthread_mutex_t *g_message;
-pthread_t		*g_thread;
-size_t			g_start;
-// int				g_full_philos;
+pthread_t		g_thread[200];
+size_t			g_time_at_beginning;
+ int				g_satisfied_philos;
 // int				g_error;
 
 int check_isdigit(int ac, char **av);
@@ -75,6 +76,8 @@ char	*ft_strdup(const char *src);
 void    philo_eat(size_t time_when_eat, t_philo *one_philo);
 void		count_time(size_t time, size_t desired_time);
 void philo_sleep(size_t time_when_sleep, t_philo *one_philo);
+int stop_simulation(void);
+void		wait_threads(void);
 
 
 
