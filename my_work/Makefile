@@ -6,7 +6,7 @@ RM = rm -f
 
 NAME = philo
 
-SRC = 	main.c utils.c\
+SRC = 	main.c utils.c routine.c execute_threads.c check_arguments.c eat_sleep.c\
 
 OBJ = $(SRC:.c=.o)
 
