@@ -11,9 +11,17 @@ int main(int ac, char **av)
 	init_fork(); //initialize mutex object (an array because we have several forks, each fork is a mutex)
 	g_time_at_beginning = get_time();
 
-	printf("time at begining = %zu\n", g_time_at_beginning);
+
 	execute_thread();
-	stop_simulation();
+	if (stop_simulation() == 1) //in case one die or satisfied
+	{
+		i = 0;
+		while (i < g_info.num_philo)
+		{
+			pthread_detach(g_thread[i]);
+			i++;
+		}
+	}
 	wait_threads();
 
 	//if (is_philo_dead() == 1)
@@ -57,15 +65,8 @@ int stop_simulation(void)
 				return (1);
 			i++;
 		}
-		//if (g_error == FATAL_ERR)
-		//{
-		//	ft_putstr_fd("error: fatal\n", 2);
-		//	return (1);
-		//}
-		return (0);
 	}
 	return (0);
-
 }
 
 void	init_fork(void)
