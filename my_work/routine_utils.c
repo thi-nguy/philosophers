@@ -33,7 +33,7 @@ void    create_message(size_t time, t_philo *one_philo, int action)
     char *action_name;
 
     action_name = ft_strdup(get_action_name(action));
-    printf("%zu %d is %s\n", time, one_philo->order, action_name);
+    printf("%zu\tPhilosopher %d is %s\n", time, one_philo->order, action_name);
     free(action_name);
     action_name = NULL;
 

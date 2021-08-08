@@ -39,12 +39,12 @@ void	*routine(void *arg)
 		}
         philo_sleep(get_time(), one_philo);
 		print_message(get_time() - g_time_at_beginning, one_philo, THINK);
-        if (get_time() - one_philo->time_at_end_of_meal > g_info.time_to_die)
-        {
-            print_message(get_time() - g_time_at_beginning, one_philo, DEAD);
-			g_dead_philo = 1;
-            break ;
-        }
+        //if (get_time() - one_philo->time_at_end_of_meal > g_info.time_to_die)
+        //{
+        //    print_message(get_time() - g_time_at_beginning, one_philo, DEAD);
+		//	g_dead_philo = 1;
+        //    break ;
+        //}
 	}
     return (0);
 }

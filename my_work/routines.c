@@ -4,7 +4,8 @@ int     assign_first_fork(t_philo *one_philo)
 {
     if (one_philo->order % 2 == 0) //if philo is at even order, first fork is on the right. otherwise is on the left
         return (RIGHT);
-    return (LEFT);
+    else
+        return (LEFT);
 }
 
 void    get_one_fork(t_philo *one_philo, int which_fork)

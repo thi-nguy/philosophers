@@ -42,7 +42,7 @@ void	init_global_var(void)
 	g_philo = (t_philo *)malloc(sizeof(t_philo) * g_info.num_philo);
 	if (!g_philo)
 		return ;
-	g_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * g_info.num_philo);
+	g_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (g_info.num_philo + 1));
 	if (!g_fork)
 		return ;
 	g_satisfied_philos = 0;
