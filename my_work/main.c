@@ -19,9 +19,28 @@ int main(int ac, char **av)
 			pthread_detach(g_thread[i]);
 			i++;
 		}
+		free_memory();
 	}
-	wait_threads();
 	return (0);
+}
+
+void free_memory(void)
+{
+	if (g_philo)
+	{
+		free(g_philo);
+		g_philo = NULL;
+	}
+	if (g_fork)
+	{
+		free(g_fork);
+		g_fork = NULL;
+	}
+	if (g_thread)
+	{
+		free(g_thread);
+		g_thread = NULL;
+	}
 }
 
 int stop_simulation(void)

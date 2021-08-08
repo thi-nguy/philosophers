@@ -41,10 +41,10 @@ typedef struct			s_philo {
 }   t_philo;
 
 argument_t      g_info;
-t_philo			g_philo[200];
-pthread_mutex_t	g_fork[200];
+t_philo			*g_philo;
+pthread_mutex_t	*g_fork;
+pthread_t		*g_thread;
 pthread_mutex_t *g_message;
-pthread_t		g_thread[200];
 size_t			g_time_at_beginning;
 int				g_satisfied_philos;
 int				g_dead_philo;
@@ -60,6 +60,7 @@ int check_arg(int ac, char **av);
 void    parse_info(int ac, char **av);
 
 void	init_info_philo(void);
+void	init_global_var(void);
 int		find_left_fork(int i);
 void	init_fork(void);
 
@@ -82,5 +83,6 @@ void philo_sleep(size_t g_time_at_beginning_of_sleeping, t_philo *one_philo);
 
 int stop_simulation(void);
 void		wait_threads(void);
+void free_memory(void);
 
 #endif

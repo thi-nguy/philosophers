@@ -19,6 +19,7 @@ void	init_info_philo(void)
 	int i;
 	int left_fork_index;
 
+	init_global_var();
 	i = 0;
 	while (i < g_info.num_philo)
 	{
@@ -31,6 +32,19 @@ void	init_info_philo(void)
 		g_philo[i].message = &g_fork[g_info.num_philo];
 		i++;
 	}
+}
+
+void	init_global_var(void)
+{
+	g_thread = (pthread_t *)malloc(sizeof(pthread_t) * g_info.num_philo);
+	if (!g_thread)
+		return ;
+	g_philo = (t_philo *)malloc(sizeof(t_philo) * g_info.num_philo);
+	if (!g_philo)
+		return ;
+	g_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * g_info.num_philo);
+	if (!g_fork)
+		return ;
 	g_satisfied_philos = 0;
 	g_dead_philo = 0;
 }

@@ -59,6 +59,11 @@ int	check_int(int ac, char **av)
             printf("Argument is out of scope.\n");
 			return (-1);
         }
+		if (num == 0)
+		{
+			printf("Argument should be positive and different than 0.\n");
+			return (-1);
+		}
 		i++;
 	}
 	return (1);
