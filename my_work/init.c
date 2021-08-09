@@ -7,10 +7,13 @@ void	init_fork(void)
 	i = 0;
 	while (i < g_info.num_philo)
 	{
-		if (pthread_mutex_init(&g_fork[i], NULL) == 0)
-			i++;
+		if (pthread_mutex_init(&g_fork[i], NULL) == -1)
+		{
+			g_error = 1;
+			break ;
+		}
 		else
-			break;
+			i++;
 	}
 }
 
@@ -19,7 +22,11 @@ void	init_info_philo(void)
 	int i;
 	int left_fork_index;
 
-	init_global_var();
+	if (init_global_var() == 0)
+	{
+		g_error = 1;
+		return ;
+	}
 	i = 0;
 	while (i < g_info.num_philo)
 	{
@@ -34,19 +41,21 @@ void	init_info_philo(void)
 	}
 }
 
-void	init_global_var(void)
+int	init_global_var(void)
 {
 	g_thread = (pthread_t *)malloc(sizeof(pthread_t) * g_info.num_philo);
 	if (!g_thread)
-		return ;
+		return (0) ;
 	g_philo = (t_philo *)malloc(sizeof(t_philo) * g_info.num_philo);
 	if (!g_philo)
-		return ;
+		return (0);
 	g_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (g_info.num_philo + 1));
 	if (!g_fork)
-		return ;
+		return (0);
 	g_satisfied_philos = 0;
 	g_dead_philo = 0;
+	g_error = 0;
+	return (1);
 }
 
 int		find_left_fork(int i)

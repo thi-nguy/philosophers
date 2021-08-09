@@ -13,11 +13,9 @@ enum {
 	SLEEP = 2,
 	THINK = 3,
 	TAKE_A_FORK = 4,
-    PUT_DOWN_LEFT_FORK = 5,
-    PUT_DOWN_RIGHT_FORK = 6,
-	DEAD = 7,
-	RIGHT = 8,
-	LEFT = 9
+	DEAD = 5,
+	RIGHT = 6,
+	LEFT = 7
 };
 
 
@@ -48,6 +46,7 @@ pthread_mutex_t *g_message;
 size_t			g_time_at_beginning;
 int				g_satisfied_philos;
 int				g_dead_philo;
+int				g_error;
 
 int ft_isdigit(char c);
 int 	ft_strlen(const char *str);
@@ -60,7 +59,7 @@ int check_arg(int ac, char **av);
 void    parse_info(int ac, char **av);
 
 void	init_info_philo(void);
-void	init_global_var(void);
+int	init_global_var(void);
 int		find_left_fork(int i);
 void	init_fork(void);
 

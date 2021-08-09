@@ -12,10 +12,6 @@ const char	*get_action_name(int action)
 {
 	if (action == TAKE_A_FORK)
 		return ("taking a fork");
-  else if (action == PUT_DOWN_LEFT_FORK)
-		return ("putting down left fork");
-  else if (action == PUT_DOWN_RIGHT_FORK)
-		return ("putting down right fork");
 	else if (action == SLEEP)
 		return ("sleeping");
 	else if (action == EAT)

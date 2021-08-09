@@ -20,27 +20,10 @@ int main(int ac, char **av)
 			i++;
 		}
 		free_memory();
+		return (0);
 	}
+	// wait_threads();
 	return (0);
-}
-
-void free_memory(void)
-{
-	if (g_philo)
-	{
-		free(g_philo);
-		g_philo = NULL;
-	}
-	if (g_fork)
-	{
-		free(g_fork);
-		g_fork = NULL;
-	}
-	if (g_thread)
-	{
-		free(g_thread);
-		g_thread = NULL;
-	}
 }
 
 int stop_simulation(void)
@@ -52,16 +35,18 @@ int stop_simulation(void)
 		i = 0;
 		while (i < g_info.num_philo)
 		{
+			if (g_dead_philo == 1 || g_error == 1)
+				return (1);
 			if (g_philo[i].is_hungry && get_time() - g_philo[i].time_at_end_of_meal > g_info.time_to_die) // TODO: in case there is only one fork, wait forever to eat.
 			{
-				g_dead_philo = 1;
 				print_message(get_time() - g_time_at_beginning, &g_philo[i], DEAD);
+				g_dead_philo = 1;
 				return (1);
 			}
 			else if (get_time() - g_philo[i].time_at_end_of_meal > g_info.time_to_die)
 			{
-				g_dead_philo = 1;
 				print_message(get_time() - g_time_at_beginning, &g_philo[i], DEAD);
+				g_dead_philo = 1;
 				return (1); // TODO: in case have meals_must_eat. Stop when satisfied all philos.
 
 			}
@@ -82,5 +67,25 @@ void		wait_threads(void)
 	{
 		pthread_join(g_thread[i], NULL);
 		i++;
+	}
+}
+
+
+void free_memory(void)
+{
+	if (g_philo)
+	{
+		free(g_philo);
+		g_philo = NULL;
+	}
+	if (g_fork)
+	{
+		free(g_fork);
+		g_fork = NULL;
+	}
+	if (g_thread)
+	{
+		free(g_thread);
+		g_thread = NULL;
 	}
 }

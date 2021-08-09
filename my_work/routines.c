@@ -11,10 +11,23 @@ int     assign_first_fork(t_philo *one_philo)
 void    get_one_fork(t_philo *one_philo, int which_fork)
 {
     if (which_fork == RIGHT)
-        pthread_mutex_lock(one_philo->right_fork);
+    {
+        if (pthread_mutex_lock(one_philo->right_fork) == -1)
+        {
+            g_error = 1;
+            return ;
+        }
+    }
     else
-        pthread_mutex_lock(one_philo->left_fork);
-    print_message(get_time() - g_time_at_beginning, one_philo, TAKE_A_FORK);
+    {
+        if (pthread_mutex_lock(one_philo->left_fork) == -1)
+        {
+            g_error = 1;
+            return ;
+        }
+    }
+    if (g_dead_philo != 1)
+        print_message(get_time() - g_time_at_beginning, one_philo, TAKE_A_FORK);
 }
 
 void    get_both_forks(t_philo *one_philo)
@@ -27,6 +40,7 @@ void    get_both_forks(t_philo *one_philo)
     }
     else if (assign_first_fork(one_philo) == LEFT)
     {
+        // usleep(1000);
         get_one_fork(one_philo, LEFT);
         get_one_fork(one_philo, RIGHT);
     }
@@ -34,7 +48,8 @@ void    get_both_forks(t_philo *one_philo)
 
 void    philo_eat(size_t time_at_beginning_of_eating, t_philo *one_philo)
 {
-    print_message(time_at_beginning_of_eating - g_time_at_beginning, one_philo, EAT);
+    if (g_dead_philo != 1)
+        print_message(time_at_beginning_of_eating - g_time_at_beginning, one_philo, EAT);
     count_time(time_at_beginning_of_eating, g_info.time_to_eat);
     one_philo->time_at_end_of_meal = get_time();
 	one_philo->current_meal++;
@@ -42,12 +57,13 @@ void    philo_eat(size_t time_at_beginning_of_eating, t_philo *one_philo)
 
 void philo_sleep(size_t g_time_at_beginning_of_sleeping, t_philo *one_philo)
 {
-    print_message(g_time_at_beginning_of_sleeping - g_time_at_beginning, one_philo, SLEEP);
+    if (g_dead_philo != 1)
+        print_message(g_time_at_beginning_of_sleeping - g_time_at_beginning, one_philo, SLEEP);
     count_time(g_time_at_beginning_of_sleeping, g_info.time_to_sleep);
 }
 
 void		count_time(size_t time, size_t desired_time)
 {
 	while (get_time() - time < desired_time)
-		usleep(10);
+		usleep(100);
 }
