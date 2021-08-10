@@ -27,7 +27,7 @@ int	ft_isdigit(char c)
 		return (0);
 }
 
-int 	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -58,4 +58,3 @@ char	*ft_strdup(const char *src)
 	dest[i] = '\0';
 	return (dest);
 }
-
