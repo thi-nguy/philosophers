@@ -1,6 +1,6 @@
 FLAGS = -Wall -Wextra -Werror -lpthread
 
-CC = gcc
+CC = gcc -g -fsanitize=address
 
 RM = rm -f
 

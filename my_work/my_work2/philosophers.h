@@ -80,14 +80,14 @@ void	init_philo(t_info *info);
 void	init_one_philo(t_info *info, int index);
 int			find_left_fork(int num_philo, int i);
 size_t	get_time(void);
+void		execute_thread(t_info *info);
+void		*routine(void *arg);
 
 
 //int			init_global_var(void);
 //void		init_fork(void);
 
-//void		execute_thread(void);
 
-//void		*routine(void *arg);
 //void		get_both_forks(t_philo *one_philo);
 //void		get_one_fork(t_philo *one_philo, int which_fork);
 //int			assign_first_fork(t_philo *one_philo);

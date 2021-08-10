@@ -20,6 +20,10 @@ void	init_info(t_info *info)
 	info->satisfied_philos = 0;
 	info->error = 0;
 	info->t_start = get_time();
+	info->message = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* 1);
+	if (!info->message)
+		return ;
 	if (pthread_mutex_init(info->message, NULL))
 	{
 		info->error = 1;

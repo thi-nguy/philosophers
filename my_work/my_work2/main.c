@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		return (0);
 	parse_info(ac, av, &info);
 	init_info(&info);
-	//execute_thread();
+	execute_thread(&info);
 	//if (stop_simulation())
 	//{
 	//	wait_threads();
