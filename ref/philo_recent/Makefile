@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tefroiss <tefroiss@student.42.fr>          +#+  +:+       +#+         #
+#    By: thi-nguy <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/29 17:18:43 by tefroiss          #+#    #+#              #
-#    Updated: 2021/07/12 14:42:19 by tefroiss         ###   ########.fr        #
+#    Updated: 2021/08/11 18:04:49 by thi-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ MAIN 		= 	srcs/main.c
 OBJS_MAIN 	= 	$(MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
-CC			=	clang
+CC			=	gcc
 
 CFLAGS		+=	-Wall -Wextra -Werror
 
