@@ -1,12 +1,12 @@
 FLAGS = -Wall -Wextra -Werror -lpthread
 
-CC = gcc
+CC = gcc -g -fsanitize=address
 
 RM = rm -f
 
 NAME = philo
 
-SRC = 	main.c utils.c check_arguments.c init.c\
+SRC = 	main.c utils.c check_arguments.c init.c execute_threads.c routines.c routine_utils.c\
 
 OBJ = $(SRC:.c=.o)
 

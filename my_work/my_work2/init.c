@@ -6,7 +6,7 @@
 /*   By: thi-nguy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:52:19 by thi-nguy          #+#    #+#             */
-/*   Updated: 2021/08/10 09:55:12 by thi-nguy         ###   ########.fr       */
+/*   Updated: 2021/08/11 16:25:43 by thi-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	init_info(t_info *info)
 	info->satisfied_philos = 0;
 	info->error = 0;
 	info->t_start = get_time();
+	info->message = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * 1);
+	if (!info->message)
+		return ;
 	if (pthread_mutex_init(info->message, NULL))
 	{
 		info->error = 1;
@@ -68,13 +71,18 @@ void	init_one_philo(t_info *info, int index)
 {
 	int left_fork_index;
 
-	info->philo->index = index;
-	info->philo->current_meal = 0;
-	info->philo->is_dead = 0;
-	info->philo->is_hungry = 1;
+	info->philo[index].index = index;
+	info->philo[index].current_meal = 0;
+	info->philo[index].is_hungry = 1;
+	info->philo[index].is_dead = &info->is_dead;
+	info->philo[index].message = info->message;
+	info->philo[index].arg = &info->arg;
+	info->philo[index].satisfied_philo = &info->satisfied_philos;
 	left_fork_index = find_left_fork(info->arg.num_philo, index);
-	info->philo->left_fork = &info->fork[left_fork_index];
-	info->philo->right_fork = &info->fork[index];
+	info->philo[index].left_fork = &info->fork[left_fork_index];
+	info->philo[index].right_fork = &info->fork[index];
+	info->philo[index].t_start = &info->t_start;
+	info->philo[index].error = &info->error;
 }
 
 
