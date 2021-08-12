@@ -6,7 +6,7 @@
 /*   By: thi-nguy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:52:19 by thi-nguy          #+#    #+#             */
-/*   Updated: 2021/08/11 16:25:43 by thi-nguy         ###   ########.fr       */
+/*   Updated: 2021/08/12 22:59:10 by thi-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	init_info(t_info *info)
 {
 	int	i;
 
-	info->is_dead = 0;
+	// info->is_dead = 0;
 	info->satisfied_philos = 0;
-	info->error = 0;
+	// info->error = 0;
 	info->t_start = get_time();
 	info->message = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * 1);
 	if (!info->message)
@@ -73,18 +73,28 @@ void	init_one_philo(t_info *info, int index)
 
 	info->philo[index].index = index;
 	info->philo[index].current_meal = 0;
-	info->philo[index].is_hungry = 1;
-	info->philo[index].is_dead = &info->is_dead;
+	info->philo[index].t_last_meal = 0;
+	info->philo[index].fork_take = 0;
+	// info->philo[index].is_hungry = 1;
+	// info->philo[index].is_dead = &info->is_dead;
 	info->philo[index].message = info->message;
 	info->philo[index].arg = &info->arg;
+	info->philo[index].state = assign_forks(index);
 	info->philo[index].satisfied_philo = &info->satisfied_philos;
 	left_fork_index = find_left_fork(info->arg.num_philo, index);
 	info->philo[index].left_fork = &info->fork[left_fork_index];
 	info->philo[index].right_fork = &info->fork[index];
 	info->philo[index].t_start = &info->t_start;
-	info->philo[index].error = &info->error;
+	// info->philo[index].error = &info->error;
 }
 
+int	assign_forks(int index)
+{
+	if (index % 2 == 0)
+		return (TAKE_A_FORK);
+	else
+		return (THINK);
+}
 
 void	parse_info(int ac, char **av, t_info *info)
 {

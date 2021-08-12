@@ -6,7 +6,7 @@
 /*   By: thi-nguy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 10:00:45 by thi-nguy          #+#    #+#             */
-/*   Updated: 2021/08/11 16:46:08 by thi-nguy         ###   ########.fr       */
+/*   Updated: 2021/08/12 23:11:42 by thi-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-enum {
-	EAT = 1,
-	SLEEP = 2,
-	THINK = 3,
-	TAKE_A_FORK = 4,
-	DEAD = 5,
-	RIGHT = 6,
-	LEFT = 7
-};
+typedef enum e_state {
+	EAT,
+	SLEEP,
+	THINK,
+	TAKE_A_FORK,
+	DEAD,
+	RIGHT,
+	LEFT,
+	STOP
+}	t_state;
 
 typedef struct s_arg
 {
@@ -42,11 +43,13 @@ typedef struct s_arg
 typedef struct s_philo {
 	int				index;
 	int				current_meal;
-	int				is_hungry;
+	// int				is_hungry;
 	size_t			t_last_meal;
 	pthread_t		thread;
+	t_state			state;
 	int				*satisfied_philo;
-	int 			*is_dead;
+	// int 			*is_dead;
+	int				fork_take;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*message;
@@ -68,6 +71,8 @@ typedef struct s_info
 
 }	t_info;
 
+// typedef void	(*t_actions)(t_philo *philo, size_t time);
+
 long int	ft_atoi(const char *str);
 int			ft_isdigit(char c);
 int			ft_strlen(const char *str);
@@ -83,6 +88,7 @@ void		init_fork(t_info *info);
 void		init_philo(t_info *info);
 void		init_one_philo(t_info *info, int index);
 int			find_left_fork(int num_philo, int i);
+int			assign_forks(int index);
 
 size_t		get_time(void);
 void		free_memory(t_info *info);
@@ -90,12 +96,6 @@ void		free_memory(t_info *info);
 void		execute_thread(t_info *info);
 void		*routine(void *arg);
 
-int			assign_first_fork(t_philo *one_philo);
-void		get_both_forks(t_philo *one_philo);
-void		get_one_fork(t_philo *one_philo, int which_fork);
-void		philo_sleep(size_t g_t_begin_of_sleeping,
-				t_philo *one_philo);
-void		philo_eat(size_t time_at_beginning_of_eating, t_philo *one_philo);
 
 
 const char	*get_action_name(int action);
@@ -104,7 +104,15 @@ void		print_message(size_t time, t_philo *one_philo, int action);
 void		count_time(size_t time, size_t desired_time);
 
 void		end_simulation(t_info *info);
-int			stop_simulation(t_info *info);
 
+void		do_eat(t_philo *one_philo, size_t time_to_eat);
+void		do_sleep(t_philo *one_philo, size_t time_at_beginning_of_sleeping);
+void		do_think(t_philo *one_philo, size_t time_at_beginning_of_thinking);
+void	 	die(t_philo *one_philo, size_t time_at_dying);
+// void philo_do_something(t_philo *one_philo, void (*ph_action)(t_philo *, size_t));
+
+void		take_forks(t_philo *one_philo, size_t time_at_taking_fork);
+void	get_both_forks(t_philo *one_philo, size_t time);
+// void	*wait_irt(void *philo);
 
 #endif
