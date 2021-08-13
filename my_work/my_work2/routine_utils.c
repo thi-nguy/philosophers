@@ -6,7 +6,7 @@
 /*   By: thi-nguy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 10:08:31 by thi-nguy          #+#    #+#             */
-/*   Updated: 2021/08/11 16:28:32 by thi-nguy         ###   ########.fr       */
+/*   Updated: 2021/08/13 18:45:24 by thi-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 const char	*get_action_name(int action)
 {
-	if (action == TAKE_A_FORK)
-		return ("taking a fork");
+	if (action == TAKE_RIGHT_FORK)
+		return ("taking right fork");
+	else if (action == TAKE_LEFT_FORK)
+		return ("taking left fork");
+	else if (action == TAKE_DOWN_RIGHT_FORK)
+		return ("taking down right fork");
+	else if (action == TAKE_DOWN_LEFT_FORK)
+		return ("taking down left fork");
 	else if (action == SLEEP)
 		return ("sleeping");
 	else if (action == EAT)
@@ -33,7 +39,7 @@ void	create_message(size_t time, t_philo *one_philo, int action)
 	char	*action_name;
 
 	action_name = ft_strdup(get_action_name(action));
-	printf("%zu\tPhilosopher %d is %s\n", time, one_philo->index, action_name);
+	printf("%zu %d is %s\n", time, one_philo->index, action_name);
 	free(action_name);
 	action_name = NULL;
 }
