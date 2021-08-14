@@ -61,7 +61,7 @@ void	philo_eat(size_t time_at_beginning_of_eating, t_philo *one_philo)
 	if (g_dead_philo != 1)
 		print_message(time_at_beginning_of_eating - g_t_begin,
 			   one_philo, EAT);
-	count_time(time_at_beginning_of_eating, g_info.time_to_eat);
+	count_time(time_at_beginning_of_eating, g_info.t_eat);
 	one_philo->t_last_meal = get_time();
 	one_philo->current_meal++;
 }
@@ -70,5 +70,5 @@ void	philo_sleep(size_t g_t_begin_of_sleeping, t_philo *one_philo)
 {
 	if (g_dead_philo != 1)
 		print_message(g_t_begin_of_sleeping - g_t_begin, one_philo, SLEEP);
-	count_time(g_t_begin_of_sleeping, g_info.time_to_sleep);
+	count_time(g_t_begin_of_sleeping, g_info.t_sleep);
 }
