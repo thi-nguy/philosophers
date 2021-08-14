@@ -48,8 +48,7 @@ void	print_message(size_t time, t_philo *one_philo, int action)
 {
 	pthread_mutex_lock(one_philo->message);
 	create_message(time, one_philo, action);
-	if (action != DEAD)
-		pthread_mutex_unlock(one_philo->message);
+	pthread_mutex_unlock(one_philo->message);
 }
 
 void	count_time(size_t time, size_t desired_time)

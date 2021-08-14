@@ -5,16 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/philo",
-            "args": ["2", "800", "200", "100"],
+            "args": ["4", "410", "200", "100"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
+            "MIMode": "lldb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

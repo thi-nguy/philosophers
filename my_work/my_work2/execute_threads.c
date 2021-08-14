@@ -30,13 +30,9 @@ void	*routine(void *arg)
 	size_t time_now;
 
 	one_philo = (t_philo *)arg;
-	while (*one_philo->global_state != DEAD && *one_philo->global_state != STOP)
+	while (*one_philo->global_state == ALIVE)
 	{
 
-		// TODO: condition to die. If not die, continue
-		// TODO: if die, print message, return.
-			// TODO Condition 1: no one has eaten.
-			// TODO Condition 2: time pass the time_to_die
 		if (*one_philo->satisfied_philo == one_philo->arg->num_philo)
 		{
 			*one_philo->global_state = STOP;
@@ -49,30 +45,14 @@ void	*routine(void *arg)
 			break ;
 		}
 		time_now = get_time();
-		if (one_philo->state == TAKE_RIGHT_FORK)
-			take_forks(one_philo, time_now);
+		if (one_philo->state == FORK)
+			take_forks(one_philo);
 		else if (one_philo->state == EAT)
 			do_eat(one_philo, time_now);
 		else if (one_philo->state == SLEEP)
 			do_sleep(one_philo, time_now);
 		else if (one_philo->state == THINK)
 			do_think(one_philo, time_now);
-	}
-	if (one_philo->left_fork_take == 1)
-	{
-		pthread_mutex_unlock(one_philo->left_fork);
-		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_LEFT_FORK);
-		one_philo->fork_take--;
-		one_philo->left_fork_take = 0;
-
-	}
-	if (one_philo->right_fork_take == 1)
-	{
-		pthread_mutex_unlock(one_philo->right_fork);
-		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_RIGHT_FORK);
-		one_philo->fork_take--;
-		one_philo->right_fork_take = 0;
-
 	}
 	return (NULL);
 }

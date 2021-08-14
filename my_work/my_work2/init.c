@@ -17,6 +17,7 @@ void	init_info(t_info *info)
 	int	i;
 
 	info->satisfied_philos = 0;
+	info->forks_taken = 0;
 	info->t_start = get_time();
 	info->global_state = ALIVE;
 	info->message = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * 1);
@@ -65,12 +66,11 @@ void	init_one_philo(t_info *info, int index)
 	info->philo[index].index = index;
 	info->philo[index].current_meal = 0;
 	info->philo[index].t_last_meal = 0;
-	info->philo[index].fork_take = 0;
-	info->philo[index].right_fork_take = 0;
-	info->philo[index].left_fork_take = 0;
 	info->philo[index].message = info->message;
+	info->philo[index].state = assign_state(index);
+
+	info->philo[index].forks_taken = &info->forks_taken;
 	info->philo[index].arg = &info->arg;
-	info->philo[index].state = assign_forks(index);
 	info->philo[index].satisfied_philo = &info->satisfied_philos;
 	right_fork_index = find_right_fork(info->arg.num_philo, index);
 	info->philo[index].left_fork = &info->fork[index];
@@ -79,12 +79,11 @@ void	init_one_philo(t_info *info, int index)
 	info->philo[index].global_state = &info->global_state;
 }
 
-int	assign_forks(int index)
+int	assign_state(int index)
 {
 	if (index % 2 == 0)
-		return (TAKE_RIGHT_FORK);
-	else if (index % 2 != 0)
-		return (THINK);
+		return (FORK);
+	return (THINK);
 }
 
 void	parse_info(int ac, char **av, t_info *info)
