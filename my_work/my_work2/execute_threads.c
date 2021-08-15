@@ -18,6 +18,7 @@ void	execute_thread(t_info *info)
 	i = 0;
 	while (i < info->arg.num_philo)
 	{
+		info->philo[i].t_last_meal = 0;
 		pthread_create(&info->philo[i].thread, NULL, routine,
 				   (void *)(&info->philo[i]));
 		i++;
@@ -32,27 +33,26 @@ void	*routine(void *arg)
 	one_philo = (t_philo *)arg;
 	while (*one_philo->global_state == ALIVE)
 	{
-
 		if (*one_philo->satisfied_philo == one_philo->arg->num_philo)
 		{
 			*one_philo->global_state = STOP;
-			break ;
+			return (NULL);
 		}
 		if (get_time() - *one_philo->t_start - one_philo->t_last_meal > one_philo->arg->t_die)
 		{
-			printf("time last meal of philo %d = %ld\n", one_philo->index, one_philo->t_last_meal);
+			//printf("time last meal of philo %d = %ld\n", one_philo->index, one_philo->t_last_meal);
 			die(one_philo, get_time());
-			break ;
+			return (NULL);
 		}
 		time_now = get_time();
-		if (one_philo->state == FORK)
+		if (one_philo->state == THINK)
+			do_think(one_philo, time_now);
+		else if (one_philo->state == FORK)
 			take_forks(one_philo);
 		else if (one_philo->state == EAT)
 			do_eat(one_philo, time_now);
 		else if (one_philo->state == SLEEP)
 			do_sleep(one_philo, time_now);
-		else if (one_philo->state == THINK)
-			do_think(one_philo, time_now);
 	}
 	return (NULL);
 }

@@ -112,7 +112,7 @@ void		do_think(t_philo *one_philo, size_t time_at_beginning_of_thinking);
 void	 	die(t_philo *one_philo, size_t time_at_dying);
 
 void		take_forks(t_philo *one_philo);
-void	get_both_forks(t_philo *one_philo, size_t time, t_state first_fork);
-int		assign_fork(int index);
+int			get_both_forks(t_philo *one_philo, size_t time, t_state first_fork);
+int			assign_fork(int index);
 
 #endif
