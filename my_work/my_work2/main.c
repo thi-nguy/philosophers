@@ -22,33 +22,10 @@ int	main(int ac, char **av)
 	parse_info(ac, av, &info);
 	init_info(&info);
 	execute_thread(&info);
-	// if (stop_simulation(&info) == 1)
-	// 	//TODO; join thread, destroy mutex, free memory
+	// TODO; join thread, destroy mutex, free memory
 	end_simulation(&info);
 	return (0);
 }
-
-// int	stop_simulation(t_info *info)
-// {
-// 	int	i;
-
-// 	while (1)
-// 	{
-// 		i = -1;
-// 		while (++i < info->arg.num_philo)
-// 		{
-// 			if (info->is_dead == 1)
-// 			{
-// 				print_message(get_time() - info->t_start, &info->philo[i], DEAD);
-// 				return (1);
-// 			}
-// 			// if (g_satisfied_philos == g_info.num_philo)
-// 			// 	return (1);
-// 		}
-
-// 	}
-// 	return (0);
-// }
 
 void	end_simulation(t_info *info)
 {

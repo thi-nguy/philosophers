@@ -65,7 +65,7 @@ void	init_one_philo(t_info *info, int index)
 
 	info->philo[index].index = index;
 	info->philo[index].current_meal = 0;
-	//info->philo[index].t_last_meal = 0;
+	info->philo[index].t_last_meal = 0;
 	info->philo[index].message = info->message;
 	info->philo[index].state = assign_state(index);
 
