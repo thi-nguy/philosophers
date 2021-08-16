@@ -31,6 +31,7 @@ void	end_simulation(t_info *info)
 {
 	int	i;
 
+	pthread_join(info->global_thread, NULL);
 	i = 0;
 	while (i < info->arg.num_philo)
 	{
@@ -44,6 +45,7 @@ void	end_simulation(t_info *info)
 		i++;
 	}
 	pthread_mutex_destroy(info->message);
+
 	free_memory(info);
 }
 

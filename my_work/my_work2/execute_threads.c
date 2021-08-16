@@ -17,10 +17,8 @@ void	execute_thread(t_info *info)
 
 	i = 0;
 	pthread_create(&info->global_thread, NULL, check_status, (void *)(info));
-	// tao 1 thread moi de check tat ca philo
 	while (i < info->arg.num_philo)
 	{
-		//info->philo[i].t_last_meal = 0;
 		pthread_create(&info->philo[i].thread, NULL, routine,
 				   (void *)(&info->philo[i]));
 		i++;
@@ -56,19 +54,17 @@ void	*check_status(void *arg)
 void	*routine(void *arg)
 {
 	t_philo	*one_philo;
-	//size_t time_now;
 
 	one_philo = (t_philo *)arg;
 	while (*one_philo->global_state == ALIVE)
 	{
-		//time_now = get_time();
-		if (one_philo->state == THINK && *one_philo->global_state != DEAD)
+		if (one_philo->state == THINK)
 			do_think(one_philo, get_time());
-		else if (one_philo->state == FORK && *one_philo->global_state != DEAD)
-			*one_philo->forks_taken = take_forks(one_philo);
-		else if (one_philo->state == EAT && *one_philo->global_state != DEAD)
+		else if (one_philo->state == FORK)
+			take_forks(one_philo);
+		else if (one_philo->state == EAT)
 			do_eat(one_philo, get_time());
-		else if (one_philo->state == SLEEP && *one_philo->global_state != DEAD)
+		else if (one_philo->state == SLEEP)
 			do_sleep(one_philo, get_time());
 	}
 	return (NULL);

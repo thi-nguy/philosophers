@@ -21,38 +21,35 @@ int		assign_fork(int index)
 	return (TAKE_RIGHT_FORK);
 }
 
-int	take_forks(t_philo *one_philo)
+void	take_forks(t_philo *one_philo)
 {
-	int forks;
+	int 	first_fork;
 
-	forks = 0;
-	if (pthread_mutex_lock(one_philo->left_fork) == 0)
+	first_fork = assign_fork(one_philo->index);
+	if (first_fork == TAKE_LEFT_FORK)
 	{
+		pthread_mutex_lock(one_philo->left_fork);
 		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_LEFT_FORK);
-		forks++;
-
-	}
-	if (pthread_mutex_lock(one_philo->right_fork) == 0)
-	{
+		pthread_mutex_lock(one_philo->right_fork);
 		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_RIGHT_FORK);
-		forks++;
 	}
-	//*one_philo->forks_taken = forks;
+	else if (first_fork == TAKE_RIGHT_FORK)
+	{
+		pthread_mutex_lock(one_philo->right_fork);
+		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_RIGHT_FORK);
+		pthread_mutex_lock(one_philo->left_fork);
+		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_LEFT_FORK);
+	}
 	one_philo->state = EAT;
-	return (forks);
 }
 
 
 void	do_eat(t_philo *one_philo, size_t time_to_eat)
 {
-	int forks;
-
-	forks = *one_philo->forks_taken;
 	print_message(time_to_eat - *one_philo->t_start,
 			   one_philo, EAT);
 	count_time(time_to_eat, one_philo->arg->t_eat);
 	one_philo->t_last_meal = get_time() - *one_philo->t_start;
-	//printf("Time stamp last meal for philo %d: %ld\n", one_philo->index, one_philo->t_last_meal);
 	if (one_philo->arg->n_meals != -1 && one_philo->current_meal == one_philo->arg->n_meals)
 		one_philo->satisfied_philo++;
 	one_philo->state = SLEEP;
@@ -60,14 +57,11 @@ void	do_eat(t_philo *one_philo, size_t time_to_eat)
 	if (pthread_mutex_unlock(one_philo->left_fork) == 0)
 	{
 		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_LEFT_FORK);
-		forks--;
 	}
 	if (pthread_mutex_unlock(one_philo->right_fork) == 0)
 	{
 		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_RIGHT_FORK);
-		forks--;
 	}
-	*one_philo->forks_taken = forks;
 }
 
 void	do_sleep(t_philo *one_philo, size_t time_at_beginning_of_sleeping)
@@ -80,8 +74,6 @@ void	do_sleep(t_philo *one_philo, size_t time_at_beginning_of_sleeping)
 void	do_think(t_philo *one_philo, size_t time_at_beginning_of_thinking)
 {
 	print_message(time_at_beginning_of_thinking - *one_philo->t_start, one_philo, THINK);
-	//while (*one_philo->forks_taken == 2)
-	//	usleep(100);
 	one_philo->state = FORK;
 }
 

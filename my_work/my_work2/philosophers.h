@@ -51,7 +51,6 @@ typedef struct s_philo {
 	size_t			t_last_meal;
 	pthread_t		thread;
 	t_state			state;
-	int				*forks_taken;
 	int				*satisfied_philo;
 	t_state 		*global_state;
 	pthread_mutex_t	*left_fork;
@@ -70,7 +69,6 @@ typedef struct s_info
 	t_state			global_state;
 	size_t 			t_start;
 	pthread_t		global_thread;
-	int				forks_taken;
 	int				satisfied_philos;
 
 }	t_info;
@@ -112,7 +110,7 @@ void		do_sleep(t_philo *one_philo, size_t time_at_beginning_of_sleeping);
 void		do_think(t_philo *one_philo, size_t time_at_beginning_of_thinking);
 void	 	die(t_philo *one_philo, size_t time_at_dying);
 
-int		take_forks(t_philo *one_philo);
+void		take_forks(t_philo *one_philo);
 int			assign_fork(int index);
 void	*check_status(void *arg);
 
