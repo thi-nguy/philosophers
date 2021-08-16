@@ -64,10 +64,10 @@ void	do_eat(t_philo *one_philo)
 	}
 	count_time(time_now, one_philo->arg->t_eat);
 	one_philo->t_last_meal = get_time() - *one_philo->t_start;
-	if (one_philo->arg->n_meals != -1 && one_philo->current_meal == one_philo->arg->n_meals)
-		one_philo->satisfied_philo++;
+	one_philo->current_meal += 1;
+	if (one_philo->current_meal == one_philo->arg->n_meals)
+		*one_philo->satisfied_philo += 1;
 	one_philo->state = SLEEP;
-	one_philo->current_meal++;
 	pthread_mutex_unlock(one_philo->left_fork);
 	pthread_mutex_unlock(one_philo->right_fork);
 	if (*one_philo->global_state == ALIVE)

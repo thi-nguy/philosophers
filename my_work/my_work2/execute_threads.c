@@ -34,6 +34,7 @@ void	*check_status(void *arg)
 	info = (t_info *)arg;
 	while (1)
 	{
+
 		if (info->satisfied_philos == info->arg.num_philo)
 		{
 			info->global_state = STOP;
@@ -44,18 +45,19 @@ void	*check_status(void *arg)
 		{
 			if (get_time() - info->t_start - info->philo[i].t_last_meal > info->arg.t_die)
 			{
-				printf("Last time meal of philo[%d]: %ld\n", info->philo[i].index + 1, info->philo[i].t_last_meal);
 				die(&info->philo[i], get_time());
 				return (NULL);
 			}
 			i++;
 		}
+		//printf("satisfied philos = %d\n", info->satisfied_philos);
 	}
 }
 
 void	*routine(void *arg)
 {
 	t_philo	*one_philo;
+	int full_philo;
 
 	one_philo = (t_philo *)arg;
 	while (*one_philo->global_state == ALIVE)
