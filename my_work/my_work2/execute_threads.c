@@ -44,6 +44,7 @@ void	*check_status(void *arg)
 		{
 			if (get_time() - info->t_start - info->philo[i].t_last_meal > info->arg.t_die)
 			{
+				printf("Last time meal of philo[%d]: %ld\n", info->philo[i].index + 1, info->philo[i].t_last_meal);
 				die(&info->philo[i], get_time());
 				return (NULL);
 			}
@@ -60,13 +61,13 @@ void	*routine(void *arg)
 	while (*one_philo->global_state == ALIVE)
 	{
 		if (one_philo->state == THINK)
-			do_think(one_philo, get_time());
+			do_think(one_philo);
 		else if (one_philo->state == FORK)
 			take_forks(one_philo);
 		else if (one_philo->state == EAT)
-			do_eat(one_philo, get_time());
+			do_eat(one_philo);
 		else if (one_philo->state == SLEEP)
-			do_sleep(one_philo, get_time());
+			do_sleep(one_philo);
 	}
 	return (NULL);
 }

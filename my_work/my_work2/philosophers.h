@@ -105,9 +105,9 @@ void		count_time(size_t time, size_t desired_time);
 
 void		end_simulation(t_info *info);
 
-void		do_eat(t_philo *one_philo, size_t time_to_eat);
-void		do_sleep(t_philo *one_philo, size_t time_at_beginning_of_sleeping);
-void		do_think(t_philo *one_philo, size_t time_at_beginning_of_thinking);
+void		do_eat(t_philo *one_philo);
+void		do_sleep(t_philo *one_philo);
+void		do_think(t_philo *one_philo);
 void	 	die(t_philo *one_philo, size_t time_at_dying);
 
 void		take_forks(t_philo *one_philo);
