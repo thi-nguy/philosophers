@@ -71,14 +71,6 @@ char	*ft_strdup(const char *src)
 	return (dest);
 }
 
-// int	find_left_fork(int num_philo, int i)
-// {
-// 	if (i == num_philo - 1)
-// 		return (0);
-// 	else
-// 		return (i);
-// }
-
 int	find_right_fork(int num_philo, int i)
 {
 	if (i == 0)

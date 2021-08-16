@@ -23,10 +23,6 @@ void	init_info(t_info *info)
 	if (!info->message)
 		return ;
 	pthread_mutex_init(info->message, NULL);
-	info->global_meal = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * 1);
-	if (!info->global_meal)
-		return ;
-	pthread_mutex_init(info->global_meal, NULL);
 	init_fork(info);
 	init_philo(info);
 }
@@ -70,7 +66,6 @@ void	init_one_philo(t_info *info, int index)
 	info->philo[index].current_meal = 0;
 	info->philo[index].t_last_meal = 0;
 	info->philo[index].message = info->message;
-	info->philo[index].global_meal = info->global_meal;
 	info->philo[index].state = assign_state(index);
 	info->philo[index].arg = &info->arg;
 	info->philo[index].satisfied_philo = &info->satisfied_philos;

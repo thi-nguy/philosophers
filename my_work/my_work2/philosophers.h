@@ -52,7 +52,6 @@ typedef struct s_philo {
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*message;
-	pthread_mutex_t	*global_meal;
 	t_arg			*arg;
 	size_t			*t_start;
 }	t_philo;
@@ -63,7 +62,6 @@ typedef struct s_info
 	t_philo			*philo;
 	pthread_mutex_t *fork;
 	pthread_mutex_t	*message;
-	pthread_mutex_t	*global_meal;
 	t_state			global_state;
 	size_t 			t_start;
 	pthread_t		global_thread;
