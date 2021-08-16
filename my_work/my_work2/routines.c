@@ -44,7 +44,6 @@ void	take_forks(t_philo *one_philo)
 
 void	do_eat(t_philo *one_philo)
 {
-	print_message(one_philo, EAT);
 	count_time(get_time(), one_philo->arg->t_eat);
 	one_philo->t_last_meal = get_time() - *one_philo->t_start;
 	one_philo->current_meal += 1;
@@ -53,9 +52,16 @@ void	do_eat(t_philo *one_philo)
 		pthread_mutex_lock(one_philo->global_meal);
 		*one_philo->satisfied_philo += 1;
 		if (*one_philo->satisfied_philo == one_philo->arg->num_philo)
+		{
 			*one_philo->global_state = STOP;
+			return ;
+		}
+		else
+			print_message(one_philo, EAT);
 		pthread_mutex_unlock(one_philo->global_meal);
 	}
+	else
+		print_message(one_philo, EAT);
 	pthread_mutex_unlock(one_philo->left_fork);
 	pthread_mutex_unlock(one_philo->right_fork);
 	one_philo->state = SLEEP;

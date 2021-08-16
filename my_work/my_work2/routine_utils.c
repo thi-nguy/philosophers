@@ -17,7 +17,7 @@ const char	*get_action_name(int action)
 	if (action == SLEEP)
 		return ("sleeping");
 	else if (action == EAT)
-		return ("eating");
+		return ("done eating");
 	else if (action == THINK)
 		return ("thinking");
 	else if (action == DEAD)
