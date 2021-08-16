@@ -30,10 +30,6 @@ typedef enum e_state {
 	STOP,
 	TAKE_RIGHT_FORK,
 	TAKE_LEFT_FORK,
-	TAKE_DOWN_LEFT_FORK,
-	TAKE_DOWN_RIGHT_FORK,
-	RIGHT,
-	LEFT
 }	t_state;
 
 typedef struct s_arg
@@ -56,6 +52,7 @@ typedef struct s_philo {
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*message;
+	pthread_mutex_t	*global_meal;
 	t_arg			*arg;
 	size_t			*t_start;
 }	t_philo;
@@ -66,6 +63,7 @@ typedef struct s_info
 	t_philo			*philo;
 	pthread_mutex_t *fork;
 	pthread_mutex_t	*message;
+	pthread_mutex_t	*global_meal;
 	t_state			global_state;
 	size_t 			t_start;
 	pthread_t		global_thread;
@@ -99,19 +97,19 @@ void		*routine(void *arg);
 
 
 const char	*get_action_name(int action);
-void		create_message(size_t time, t_philo *one_philo, int action);
-void		print_message(size_t time, t_philo *one_philo, int action);
+void		create_message(t_philo *one_philo, int action);
+void		print_message(t_philo *one_philo, int action);
 void		count_time(size_t time, size_t desired_time);
 
 void		end_simulation(t_info *info);
 
+void		take_forks(t_philo *one_philo);
 void		do_eat(t_philo *one_philo);
 void		do_sleep(t_philo *one_philo);
 void		do_think(t_philo *one_philo);
 void	 	die(t_philo *one_philo, size_t time_at_dying);
 
-void		take_forks(t_philo *one_philo);
 int			assign_fork(int index);
-void	*check_status(void *arg);
+void		*check_status(void *arg);
 
 #endif

@@ -43,6 +43,7 @@ void	end_simulation(t_info *info)
 		i++;
 	}
 	pthread_mutex_destroy(info->message);
+	pthread_mutex_destroy(info->global_meal);
 	free_memory(info);
 }
 
@@ -64,5 +65,10 @@ void	free_memory(t_info *info)
 	{
 		free(info->fork);
 		info->fork = NULL;
+	}
+	if (info->global_meal)
+	{
+		free(info->global_meal);
+		info->global_meal = NULL;
 	}
 }

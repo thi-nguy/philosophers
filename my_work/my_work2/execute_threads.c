@@ -50,14 +50,12 @@ void	*check_status(void *arg)
 			}
 			i++;
 		}
-		//printf("satisfied philos = %d\n", info->satisfied_philos);
 	}
 }
 
 void	*routine(void *arg)
 {
 	t_philo	*one_philo;
-	int full_philo;
 
 	one_philo = (t_philo *)arg;
 	while (*one_philo->global_state == ALIVE)

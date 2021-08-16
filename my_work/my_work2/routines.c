@@ -30,10 +30,6 @@ void	take_forks(t_philo *one_philo)
 	{
 		pthread_mutex_lock(one_philo->left_fork);
 		pthread_mutex_lock(one_philo->right_fork);
-		if (*one_philo->global_state == ALIVE)
-			print_message(get_time() - *one_philo->t_start, one_philo, TAKE_LEFT_FORK);
-		if (*one_philo->global_state == ALIVE)
-			print_message(get_time() - *one_philo->t_start, one_philo, TAKE_RIGHT_FORK);
 		one_philo->state = EAT;
 		return ;
 	}
@@ -41,64 +37,48 @@ void	take_forks(t_philo *one_philo)
 	{
 		pthread_mutex_lock(one_philo->right_fork);
 		pthread_mutex_lock(one_philo->left_fork);
-		if (*one_philo->global_state == ALIVE)
-		{
-			print_message(get_time() - *one_philo->t_start, one_philo, TAKE_RIGHT_FORK);
-			print_message(get_time() - *one_philo->t_start, one_philo, TAKE_LEFT_FORK);
-		}
 		one_philo->state = EAT;
 		return ;
 	}
 }
 
-
 void	do_eat(t_philo *one_philo)
 {
-	size_t time_now;
-
-	if (*one_philo->global_state == ALIVE)
-	{
-		time_now = get_time();
-		print_message(time_now - *one_philo->t_start,
-				one_philo, EAT);
-	}
-	count_time(time_now, one_philo->arg->t_eat);
+	print_message(one_philo, EAT);
+	count_time(get_time(), one_philo->arg->t_eat);
 	one_philo->t_last_meal = get_time() - *one_philo->t_start;
 	one_philo->current_meal += 1;
 	if (one_philo->current_meal == one_philo->arg->n_meals)
+	{
+		pthread_mutex_lock(one_philo->global_meal);
 		*one_philo->satisfied_philo += 1;
-	one_philo->state = SLEEP;
+		if (*one_philo->satisfied_philo == one_philo->arg->num_philo)
+			*one_philo->global_state = STOP;
+		pthread_mutex_unlock(one_philo->global_meal);
+	}
 	pthread_mutex_unlock(one_philo->left_fork);
 	pthread_mutex_unlock(one_philo->right_fork);
-	if (*one_philo->global_state == ALIVE)
-	{
-		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_LEFT_FORK);
-		print_message(get_time() - *one_philo->t_start, one_philo, TAKE_DOWN_RIGHT_FORK);
-	}
+	one_philo->state = SLEEP;
 }
 
 void	do_sleep(t_philo *one_philo)
 {
 	size_t time_now;
 
-	if (*one_philo->global_state == ALIVE)
-	{
-		time_now = get_time();
-		print_message(time_now - *one_philo->t_start, one_philo, SLEEP);
-		count_time(time_now, one_philo->arg->t_sleep);
-		one_philo->state = THINK;
-	}
+	time_now = get_time();
+	print_message(one_philo, SLEEP);
+	count_time(time_now, one_philo->arg->t_sleep);
+	one_philo->state = THINK;
 }
 
 void	do_think(t_philo *one_philo)
 {
-	if (*one_philo->global_state == ALIVE)
-		print_message(get_time() - *one_philo->t_start, one_philo, THINK);
+	print_message(one_philo, THINK);
 	one_philo->state = FORK;
 }
 
 void	die(t_philo *one_philo, size_t time_at_dying)
 {
-	print_message(time_at_dying - *one_philo->t_start, one_philo, DEAD);
+	print_message(one_philo, DEAD);
 	*one_philo->global_state = DEAD;
 }
