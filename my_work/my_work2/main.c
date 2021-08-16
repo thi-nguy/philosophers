@@ -22,7 +22,6 @@ int	main(int ac, char **av)
 	parse_info(ac, av, &info);
 	init_info(&info);
 	execute_thread(&info);
-	// TODO; join thread, destroy mutex, free memory
 	end_simulation(&info);
 	return (0);
 }
@@ -31,11 +30,10 @@ void	end_simulation(t_info *info)
 {
 	int	i;
 
-	pthread_join(info->global_thread, NULL);
 	i = 0;
 	while (i < info->arg.num_philo)
 	{
-		pthread_join(info->philo[i].thread, NULL);
+		pthread_detach(info->philo[i].thread);
 		i++;
 	}
 	i = 0;
@@ -45,7 +43,6 @@ void	end_simulation(t_info *info)
 		i++;
 	}
 	pthread_mutex_destroy(info->message);
-
 	free_memory(info);
 }
 

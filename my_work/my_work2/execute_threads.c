@@ -23,6 +23,7 @@ void	execute_thread(t_info *info)
 				   (void *)(&info->philo[i]));
 		i++;
 	}
+	pthread_join(info->global_thread, NULL);
 }
 
 void	*check_status(void *arg)
@@ -58,8 +59,6 @@ void	*routine(void *arg)
 	one_philo = (t_philo *)arg;
 	while (*one_philo->global_state == ALIVE)
 	{
-		if (*one_philo->global_state == DEAD)
-			break ;
 		if (one_philo->state == THINK)
 			do_think(one_philo, get_time());
 		else if (one_philo->state == FORK)
