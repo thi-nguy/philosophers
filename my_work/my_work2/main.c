@@ -33,7 +33,7 @@ void	end_simulation(t_info *info)
 	i = 0;
 	while (i < info->arg.num_philo)
 	{
-		pthread_detach(info->philo[i].thread);
+		pthread_join(info->philo[i].thread, NULL);
 		i++;
 	}
 	i = 0;
@@ -48,21 +48,19 @@ void	end_simulation(t_info *info)
 
 void	free_memory(t_info *info)
 {
-	int	i;
-
 	if (info->message)
 	{
 		free(info->message);
 		info->message = NULL;
 	}
-	if (info->philo)
-	{
-		free(info->philo);
-		info->philo = NULL;
-	}
 	if (info->fork)
 	{
 		free(info->fork);
 		info->fork = NULL;
+	}
+	if (info->philo)
+	{
+		free(info->philo);
+		info->philo = NULL;
 	}
 }

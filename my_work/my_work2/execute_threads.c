@@ -24,6 +24,12 @@ void	execute_thread(t_info *info)
 		i++;
 	}
 	pthread_join(info->global_thread, NULL);
+	i = 0;
+	while (i < info->arg.num_philo)
+	{
+		pthread_detach(info->philo[i].thread);
+		i++;
+	}
 }
 
 void	*check_status(void *arg)
